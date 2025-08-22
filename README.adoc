@@ -1,0 +1,35 @@
+== Purpose
+
+I use Raspberry PI to run my pet projects. 
+Sometimes I need them available on the Internet, but I don't want to pay for a dedicated IP address.
+I created a docker image allowing to dynamically create (or update) an A record in a Cloudflare DNS zone. 
+This is a Cloudflare version of the AWS Route 53 dynamic DNS solution.
+
+== How to use 
+
+Create a file (named `env.list` for example) with the following content:
+
+---------------
+CLOUDFLARE_API_TOKEN=<your Cloudflare API Token>
+ZONE_ID=<Cloudflare Zone ID>
+RECORDSET=<A name to create, notes.example.com for example>
+---------------
+
+To get your Cloudflare API Token:
+1. Go to https://dash.cloudflare.com/profile/api-tokens
+2. Create a new token with "Zone:Zone:Edit" permissions for the specific zone
+3. Copy the token to CLOUDFLARE_API_TOKEN
+
+To find ZONE_ID:
+1. Go to https://dash.cloudflare.com/
+2. Select your domain
+3. The Zone ID is displayed on the right sidebar
+
+And, as soon as `env.list` is ready, run:
+
+[source, bash]
+------------------
+docker run --env-file ./env.list --rm konoplev/cloudflare-dynamic-dns
+------------------
+
+After it's done, you should have the A record updated in your Cloudflare DNS zone.
