@@ -1,6 +1,6 @@
 FROM python:3.9-alpine3.12
 
-RUN apk update && apk add bash bind-tools curl jq
+RUN apk update && apk add bash curl jq
 
 COPY scripts/update.sh /opt/
 

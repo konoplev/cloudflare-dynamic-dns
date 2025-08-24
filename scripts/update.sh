@@ -20,8 +20,8 @@ COMMENT="Auto updating @ `date`"
 # Change to AAAA if using an IPv6 address
 TYPE="A"
 
-# Get the external IP address from OpenDNS (more reliable than other providers)
-IP=`dig +short myip.opendns.com @resolver1.opendns.com`
+# Get the external IP address using curl instead of dig to avoid clock_gettime issues
+IP=`curl -s https://ipv4.icanhazip.com | tr -d '\n'`
 
 function valid_ip()
 {
